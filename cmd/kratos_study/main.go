@@ -2,9 +2,9 @@ package main
 
 import (
 	"flag"
+	"github.com/go-kratos/kratos/v2"
 	"os"
 
-	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/go-kratos/kratos/v2/log"
@@ -43,7 +43,6 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server) *kratos.App {
 		),
 	)
 }
-
 func main() {
 	flag.Parse()
 	logger := log.With(log.NewStdLogger(os.Stdout),
