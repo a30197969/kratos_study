@@ -17,54 +17,54 @@ var _ = binding.EncodeURL
 
 const _ = http.SupportPackageIsVersion1
 
-type GreeterHTTPServer interface {
-	SayHello(context.Context, *HelloRequest) (*HelloReply, error)
+type AlbumHTTPServer interface {
+	GetAlbum(context.Context, *GetAlbumRequest) (*GetAlbumReply, error)
 }
 
-func RegisterGreeterHTTPServer(s *http.Server, srv GreeterHTTPServer) {
+func RegisterAlbumHTTPServer(s *http.Server, srv AlbumHTTPServer) {
 	r := s.Route("/")
-	r.GET("/helloworld/{name}", _Greeter_SayHello0_HTTP_Handler(srv))
+	r.GET("/album/{id}", _Album_GetAlbum0_HTTP_Handler(srv))
 }
 
-func _Greeter_SayHello0_HTTP_Handler(srv GreeterHTTPServer) func(ctx http.Context) error {
+func _Album_GetAlbum0_HTTP_Handler(srv AlbumHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
-		var in HelloRequest
+		var in GetAlbumRequest
 		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
 			return err
 		}
-		http.SetOperation(ctx, "/helloworld.v1.Greeter/SayHello")
+		http.SetOperation(ctx, "/api.sigma.v1.Album/GetAlbum")
 		h := ctx.Middleware(func(ctx context.Context, req interface{}) (interface{}, error) {
-			return srv.SayHello(ctx, req.(*HelloRequest))
+			return srv.GetAlbum(ctx, req.(*GetAlbumRequest))
 		})
 		out, err := h(ctx, &in)
 		if err != nil {
 			return err
 		}
-		reply := out.(*HelloReply)
+		reply := out.(*GetAlbumReply)
 		return ctx.Result(200, reply)
 	}
 }
 
-type GreeterHTTPClient interface {
-	SayHello(ctx context.Context, req *HelloRequest, opts ...http.CallOption) (rsp *HelloReply, err error)
+type AlbumHTTPClient interface {
+	GetAlbum(ctx context.Context, req *GetAlbumRequest, opts ...http.CallOption) (rsp *GetAlbumReply, err error)
 }
 
-type GreeterHTTPClientImpl struct {
+type AlbumHTTPClientImpl struct {
 	cc *http.Client
 }
 
-func NewGreeterHTTPClient(client *http.Client) GreeterHTTPClient {
-	return &GreeterHTTPClientImpl{client}
+func NewAlbumHTTPClient(client *http.Client) AlbumHTTPClient {
+	return &AlbumHTTPClientImpl{client}
 }
 
-func (c *GreeterHTTPClientImpl) SayHello(ctx context.Context, in *HelloRequest, opts ...http.CallOption) (*HelloReply, error) {
-	var out HelloReply
-	pattern := "/helloworld/{name}"
+func (c *AlbumHTTPClientImpl) GetAlbum(ctx context.Context, in *GetAlbumRequest, opts ...http.CallOption) (*GetAlbumReply, error) {
+	var out GetAlbumReply
+	pattern := "/album/{id}"
 	path := binding.EncodeURL(pattern, in, true)
-	opts = append(opts, http.Operation("/helloworld.v1.Greeter/SayHello"))
+	opts = append(opts, http.Operation("/api.sigma.v1.Album/GetAlbum"))
 	opts = append(opts, http.PathTemplate(pattern))
 	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {

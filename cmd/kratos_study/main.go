@@ -44,6 +44,7 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server) *kratos.App {
 	)
 }
 func main() {
+	// 定义完flag后，进行解析
 	flag.Parse()
 	logger := log.With(log.NewStdLogger(os.Stdout),
 		"ts", log.DefaultTimestamp,
@@ -60,16 +61,16 @@ func main() {
 		),
 	)
 	defer c.Close()
-
+	// 加载配置源
 	if err := c.Load(); err != nil {
 		panic(err)
 	}
-
+	// conf.Bootstrap 是使用预先定义好的 conf.proto 文件生成的结构体
 	var bc conf.Bootstrap
+	// 将对应的值内容解析进 conf.Bootstrap 中，需指定 jsonnName 进行解析
 	if err := c.Scan(&bc); err != nil {
 		panic(err)
 	}
-
 	app, cleanup, err := initApp(bc.Server, bc.Data, logger)
 	if err != nil {
 		panic(err)
