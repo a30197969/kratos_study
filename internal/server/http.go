@@ -1,12 +1,12 @@
 package server
 
 import (
-	v1 "kratos_study/api/helloworld/v1"
-	"kratos_study/internal/conf"
-	"kratos_study/internal/service"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	v1 "kratos_study/api/helloworld/v1"
+	"kratos_study/internal/conf"
+	"kratos_study/internal/service"
 )
 
 // NewHTTPServer new a HTTP server.

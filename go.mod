@@ -19,6 +19,7 @@ require (
 	github.com/go-kratos/kratos/cmd/kratos/v2 v2.0.0-20211226131338-ccb649a20151 // indirect
 	github.com/go-playground/form/v4 v4.2.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/gnostic v0.5.7 // indirect
 	github.com/google/subcommands v1.2.0 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
