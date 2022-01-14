@@ -12,10 +12,8 @@ type WechatUser struct {
 	// 其中有ID、CreatedAt(创建时间)、UpdatedAt(更新时间)、DeletedAt(删除时间)
 	// gorm.Model
 
-	ID uint64 `gorm:"primaryKey"`
-	// Openid 用户的唯一标识
-	Openid string `gorm:"not null;type:varchar(50);index"`
-	// WxID 微信号
+	ID            uint64    `gorm:"primaryKey"`
+	Openid        string    `gorm:"not null;type:varchar(50);index"`
 	WxID          string    `gorm:"type:varchar(50)"`
 	Level         uint8     `gorm:"not null;default:1"`
 	Phone         string    `gorm:"type:varchar(20);index"`
