@@ -20,15 +20,19 @@ import (
 
 // initApp init kratos application.
 func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data.NewData(confData, logger)
+	db, err := data.NewDatabase(confData)
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewGreeterRepo(dataData, logger)
-	greeterUsecase := biz.NewGreeterUsecase(greeterRepo, logger)
-	greeterService := service.NewGreeterService(greeterUsecase, logger)
-	httpServer := server.NewHTTPServer(confServer, greeterService, logger)
-	grpcServer := server.NewGRPCServer(confServer, greeterService, logger)
+	dataData, cleanup, err := data.NewData(confData, logger, db)
+	if err != nil {
+		return nil, nil, err
+	}
+	wechatUserRepo := data.NewWechatUserRepo(dataData, logger)
+	wechatUserUsecase := biz.NewWechatUserUsecase(wechatUserRepo, logger)
+	wechatUserService := service.NewWechatUserService(wechatUserUsecase, logger)
+	httpServer := server.NewHTTPServer(confServer, wechatUserService, logger)
+	grpcServer := server.NewGRPCServer(confServer, wechatUserService, logger)
 	app := newApp(logger, httpServer, grpcServer)
 	return app, func() {
 		cleanup()
