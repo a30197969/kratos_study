@@ -4,7 +4,7 @@ package api.sigma.v1;
 
 import "google/api/annotations.proto";
 
-option go_package = "kratos_study/api/sigma/v1;v1";
+option go_package = "kratos_study/api/sigma/v1;v1"; // 包名
 option java_multiple_files = true;
 option java_package = "api.sigma.v1";
 
